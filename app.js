@@ -17,7 +17,7 @@ var db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'penguen123',
-    database: 'nodelogin'
+    database: 'uni_media'
 });
     
 db.connect(function (err) {
