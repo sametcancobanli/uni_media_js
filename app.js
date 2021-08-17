@@ -3,8 +3,9 @@ var express     = require("express"),
     multer      = require("multer"),
     bodyParser  = require("body-parser"),
     app         = express();
+    path 		= require('path');
     session     = require('express-session');
-	path 		= require('path');
+	
 
 const url 		= require('url');    
 ////////////////////////////////////////
