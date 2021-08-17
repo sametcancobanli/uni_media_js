@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+        <script src="https://kit.fontawesome.com/0b461dff30.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" type="text/css" href="/logincss.css"> 
+        <link rel="stylesheet" type="text/css" href="/style.css"> 
+    
+        <title>Uni Media</title>
+    </head>
+    
+    <body class="login_page">
+        <nav class="navbar bg-dark navbar-expand-sm navbar-dark fixed-top">
+            <div class="container">
+    
+                <a href="/" class="navbar-brand">
+                    <i class="fa fa-shield"></i></i>&nbsp;Uni Media
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div id="navbarCollapse" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+    
+                        <li class="nav-item ">
+                            <a href="/" class="nav-link">
+                                Home
+                            </a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a href="/about" class="nav-link">
+                                About
+                            </a>
+                        </li>
+    
+                        <li class="nav-item mr-5">
+                            <a href="/contact" class="nav-link">
+                                Contact
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link">
+                                Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/register" class="nav-link">
+                                Register
+                            </a>
+                        </li>
+    
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <main class="container">
+            <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <!------ Include the above in your HEAD tag ---------->
+    
+            <div class="wrapper fadeInDown">
+                <div id="formContent">
+                    <!-- Tabs Titles -->
+    
+                    <!-- Icon -->
+                    
+    
+                    <!-- Login Form -->
+                    <form action="/check_login" method="POST">
+                        <input type="text" name="username" class="fadeIn second" placeholder="Username" required>
+                        <input type="password" name="password" class="fadeIn second" placeholder="Password" required>
+                        <input type="submit" class="fadeIn fourth" value="Log In">
+                    </form>
+    
+                    <!-- Remind Passowrd -->
+                    <div id="formFooter">
+                        <a class="underlineHover" href="">Forgot Password?</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    
+        
+        <footer class="py-5 bg-dark text-white text-center mt-5 fixed-bottom">
+            Copyright © 2020 All Rights Reserved
+        </footer>
+        
+    </body>
+</html>

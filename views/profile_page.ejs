@@ -1,0 +1,80 @@
+<%- include ('partials/header') -%>
+<div class="container">
+    <div class="row">
+  <!----------------------------------------------------------------------------------------------------------->
+      <div class="col-md-5" >
+        <div class="panel panel-default" style="position: sticky; position: -webkit-sticky; top:100px;">
+          <div class="panel-body">
+            <div class="box box-info">
+              <div class="box-body">
+                <div class="col-sm-9">
+                  <div align="center"> <img alt="User Pic"  src="data:;base64,{{ image }}" id="profile-image1" class="img-circle img-responsive"/> 
+                    <input id="profile-image-upload" class="hidden" type="file">
+                      
+                  </div>
+                
+                            <br>
+  
+                </div>
+                          
+                          <div class="col-sm-7">
+                        
+                            <h4 style="color:#00b1b1;">{{info_2['name']}} {{info_2['surname']}} </h4></span>          
+                          </div>
+                        
+                          <div class="clearfix"></div>
+                            <hr style="margin:5px 0 5px 0;">
+  
+                          <div class="col-sm-5 col-xs-6 tital " >Student Number:</div><div class="col-sm-7">{{info_2['student_id']}}</div>
+  
+                            <div class="clearfix"></div>
+                          <div class="bot-border"></div>
+  
+                          <div class="col-sm-5 col-xs-6 tital " >Department:</div><div class="col-sm-7">{{info_2['department']}}</div>
+  
+                            <div class="clearfix"></div>
+                          <div class="bot-border"></div>
+  
+                          <div class="col-sm-5 col-xs-6 tital " >Class:</div><div class="col-sm-7">{{info_2['class']}}</div>
+  
+                          <div class="clearfix"></div>
+                          <div class="bot-border"></div>
+  
+                          <div class="col-sm-5 col-xs-6 tital " >About:</div><div class="col-sm-7">{{info_2['about']}}</div>
+                          {% if student_id == info_2['student_id'] %}
+                          <form action="/delete_profile/{{info_2['student_id']}}">
+                                <button style="margin-left: 360px;" class="float-right btn text-white btn-danger border-0" type="submit" class="btn btn-primary">Delete Profile</button>
+                          </form>
+                          {% endif %}
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>  
+  <!----------------------------------------------------------------------------------------------------------->
+            <div class="col-md-7 ">
+              {% for post in info %}
+              <div class="card m-5">
+                  <h5 class="card-header">Post</h5>
+                  <div class="card-body">
+                      <h5 class="card-title"></h5>
+                    
+                              <p class="card-text"><b>{{info_2['name']}} {{info_2['surname']}}</b></p>
+                     
+                      <blockquote class="blockquote mb-3">
+                          <footer class="blockquote-footer">{{post.p_content}} </footer>
+                      </blockquote>
+  
+                      <form action="/comment/{{post.post_id}}">
+                          <a class="float-right btn text-white btn-danger border-0"> <i class="fa fa-heart"></i> {{post.p_up_vote}}</a>
+                              <button style="margin-left: 360px;" type="submit" class="btn btn-primary">Details</button>
+                      </form>
+                  </div>
+              </div>
+              {% endfor %}
+            </div>
+  <!----------------------------------------------------------------------------------------------------------->
+  
+    </div>
+  </div>
+  <%- include ('partials/footer') -%>
