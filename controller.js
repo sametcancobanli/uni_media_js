@@ -10,9 +10,15 @@ const controller = {
 		res.end();
 	},
 
-	home : function(req, res){
+	home : async function(req, res){
 		if (req.session.loggedin) {
-			res.render("home_page", {id : req.session.user});
+			var all_post = await model.post(req, res);
+			var all_comment = await model.comment(req, res);
+			res.render("home_page", {
+				all_post : all_post,
+				all_comment : all_comment,
+				name : req.session.name
+			});
 		} else {
 			res.redirect('/login');
 		}
@@ -21,7 +27,7 @@ const controller = {
 
 	about : function(req, res){
 		if (req.session.loggedin) {
-			res.render("about_page", {id : req.session.user});
+			res.render("about_page", {name : req.session.name});
 		} else {
 			res.redirect('/login');
 		}
@@ -30,7 +36,7 @@ const controller = {
 
 	contact : function(req, res){
 		if (req.session.loggedin) {
-			res.render("contact_page", {id : req.session.user});
+			res.render("contact_page", {name : req.session.name});
 		} else {
 			res.redirect('/login');
 		}
@@ -42,10 +48,11 @@ const controller = {
 	},
 
 	check_login : async function(req, res) {
-		var returns = await model.check_login(req, res);
-			if (returns.length > 0) {
+		var new_login = await model.check_login(req, res);
+			if (new_login.user_id > 0) {
 				req.session.loggedin = true;
-				req.session.user = returns[0];
+				req.session.token = new_login.user_id;
+				req.session.name = new_login.name;
 				console.log("Succesful login.");
 				res.redirect('/home');
 				
@@ -61,8 +68,9 @@ const controller = {
 	},
 
 	check_register : async function(req, res){
-		var returns = await model.check_register(req, res);
-			if (returns.length > 0) {
+
+		new_register = await model.check_register(req, res);
+			if (new_register.user_id > 0) {
 				console.log("Record inserted.");
 				res.redirect('/welcome');
 			} else {
@@ -72,16 +80,41 @@ const controller = {
 			res.end();
 	},
 
+	write_post : async function(req, res){
+		new_post = await model.write_post(req, res);
+			if (new_post.user_id > 0) {
+				console.log("post inserted.");
+				res.redirect('/home');
+			} else {
+				console.log("post not inserted.");
+				res.redirect('/home');
+			}			
+			res.end();
+	},
+
+	write_comment : async function(req, res){
+		new_comment = await model.write_comment(req, res);
+			if (new_comment.user_id > 0) {
+				console.log("comment inserted.");
+				res.redirect('/home');
+			} else {
+				console.log("comment not inserted.");
+				res.redirect('/home');
+			}			
+			res.end();
+	},
+
 	welcome : function(req, res){
-		res.render("welcome_page", {id : req.session.user});
+		res.render("welcome_page", {name : ""});
 	},
 
 	profile : function(req, res){
-		res.render("profile_page", {id : req.session.user});
+		res.render("profile_page", {name : req.session.name});
 	},
 
 	logout : function(req, res){
 		req.session.loggedin = false;
+		req.session.name = "";
 		console.log("Succesful logout.");
 		res.redirect('/login_page');
 	},

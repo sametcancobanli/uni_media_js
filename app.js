@@ -5,26 +5,25 @@ var express     = require("express"),
     app         = express();
     path 		= require('path');
     session     = require('express-session');
-	
 
 const url 		= require('url');    
 ////////////////////////////////////////
     
-//////////// mysql connection //////////
-const mysql = require('mysql');
+// //////////// mysql connection //////////
+// const mysql = require('mysql');
     
-var db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'penguen123',
-    database: 'uni_media'
-});
+// var db = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'penguen123',
+//     database: 'uni_media'
+// });
     
-db.connect(function (err) {
-    if (err) throw err;
-        console.log('MySQL is connnected.');
-});
-////////////////////////////////////////
+// db.connect(function (err) {
+//     if (err) throw err;
+//         console.log('MySQL is connnected.');
+// });
+// ////////////////////////////////////////
 
 //////// dependencies attributes ///////
 app.use(session({
@@ -60,6 +59,10 @@ app.post('/check_login', controller.check_login);
 
 app.post("/check_register", controller.check_register);
 
+app.post('/write_post', controller.write_post);
+
+app.post('/write_comment', controller.write_comment);
+
 app.get('/welcome', controller.welcome);
 
 app.get('/profile', controller.profile);
@@ -75,5 +78,4 @@ app.listen(3000, function(){
 });
 ////////////////////////////////////////
 
-module.exports.db = db;
 module.exports = app;
