@@ -226,7 +226,50 @@ const model = {
         });
 
         return new_comment;
-    }
+    },
+
+    async show_profile (req,res) {	
+
+        const profile = await user.findAll({  
+                where: {
+                    user_id: req.session.token,
+                },
+                raw: true,
+        });
+
+        return profile[0];
+    },
+
+    async post_profile (req,res) {	
+
+        const all_post = await post.findAll({  
+                where: {
+                    user_id: req.session.token,
+                },
+                raw: true,
+                include: [user],
+                order: [
+                    ['time', 'DESC'],
+                ],
+        });
+
+        return all_post;
+    },
+
+    async count_post (req,res, category) {	
+
+        const num_post = await post.count({  
+                where: {
+                    p_area: category,
+                },
+                raw: true,
+                order: [
+                    ['time', 'DESC'],
+                ],
+        });
+
+        return num_post;
+    },
 }
 
 module.exports = model;

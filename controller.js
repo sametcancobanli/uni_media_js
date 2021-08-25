@@ -14,10 +14,16 @@ const controller = {
 		if (req.session.loggedin) {
 			var all_post = await model.post(req, res);
 			var all_comment = await model.comment(req, res);
+			var category_1 = await model.count_post(req, res, "Ders Notları");
+			var category_2 = await model.count_post(req, res, "Yurtlar");
+			var category_3 = await model.count_post(req, res, "Genel");
 			res.render("home_page", {
 				all_post : all_post,
 				all_comment : all_comment,
-				name : req.session.name
+				name : req.session.name,
+				category_1 : category_1,
+				category_2 : category_2,
+				category_3 : category_3
 			});
 		} else {
 			res.redirect('/login');
@@ -138,8 +144,20 @@ const controller = {
 		res.render("welcome_page", {name : ""});
 	},
 
-	profile : function(req, res){
-		res.render("profile_page", {name : req.session.name});
+	profile : async function(req, res){
+
+		if (req.session.loggedin) {
+			var profile = await model.show_profile(req, res);
+			var all_post = await model.post_profile(req, res);
+			res.render("profile_page", {
+				all_post : all_post,
+				profile : profile,
+				name : req.session.name
+			});
+		} else {
+			res.redirect('/login');
+		}
+		res.end();
 	},
 
 	logout : function(req, res){
