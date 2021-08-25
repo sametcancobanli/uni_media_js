@@ -80,7 +80,12 @@ const post = db.define('post', {
     },
     p_vote: {
         type: Sequelize.INTEGER
-    }
+    },
+    time: {
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        allowNull: false
+    },
 });
 user.sync().then(() => {
     console.log('post table created');
@@ -148,10 +153,42 @@ const model = {
 
     async post (req,res) {	
 
-        const all_post = await post.findAll({
+        const all_post = await post.findAll({  
             raw: true,
-            include: [user]
+            include: [user],
+            order: [
+                ['time', 'DESC'],
+            ],
+    });
+
+        return all_post;
+    },
+
+    async post_category (req,res, param) {	
+
+        const all_post = await post.findAll({  
+                where: {
+                    p_area: param.category
+                },
+                raw: true,
+                include: [user],
+                order: [
+                    ['time', 'DESC'],
+                ],
         });
+
+        return all_post;
+    },
+
+    async post_search (req,res, param) {	
+
+        const all_post = await post.findAll({
+            limit: 10,
+            where: {
+                p_text: {
+                    [Op.like]: '%' + param.search + '%'
+                }
+        }});
 
         return all_post;
     },

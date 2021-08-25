@@ -25,6 +25,36 @@ const controller = {
 		res.end();
 	},
 
+	category : async function(req, res){
+		if (req.session.loggedin) {
+			var all_post = await model.post_category(req, res, req.query);
+			var all_comment = await model.comment(req, res);
+			res.render("home_page", {
+				all_post : all_post,
+				all_comment : all_comment,
+				name : req.session.name
+			});
+		} else {
+			res.redirect('/login');
+		}
+		res.end();
+	},
+
+	search : async function(req, res){
+		if (req.session.loggedin) {
+			var all_post = await model.post_search(req, res, req.query);
+			var all_comment = await model.comment(req, res);
+			res.render("home_page", {
+				all_post : all_post,
+				all_comment : all_comment,
+				name : req.session.name
+			});
+		} else {
+			res.redirect('/login');
+		}
+		res.end();
+	},
+
 	about : function(req, res){
 		if (req.session.loggedin) {
 			res.render("about_page", {name : req.session.name});

@@ -47,6 +47,10 @@ app.get("/", controller.index);
 
 app.get("/home", controller.home);
 
+app.get("/home/category", controller.category);
+
+app.get("/home/search", controller.search);
+
 app.get("/about", controller.about);
 
 app.get("/contact", controller.contact);
