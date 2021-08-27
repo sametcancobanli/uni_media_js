@@ -110,11 +110,34 @@ user.sync().then(() => {
     console.log('comment table created');
 });
 
+const vote = db.define('vote', {
+    vote_id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+    },
+    post_id: {
+        type: Sequelize.INTEGER,
+    },
+    user_id: {
+        type: Sequelize.INTEGER,
+    }
+});
+
+user.sync().then(() => {
+    console.log('vote table created');
+});
+
 user.hasMany(post, {foreignKey: 'user_id'})
 post.belongsTo(user, {foreignKey: 'user_id'})
 
 user.hasMany(comment, {foreignKey: 'user_id'})
 comment.belongsTo(user, {foreignKey: 'user_id'})
+
+user.hasMany(vote, {foreignKey: 'user_id'})
+vote.belongsTo(user, {foreignKey: 'user_id'})
+
+post.hasMany(vote, {foreignKey: 'post_id'})
+vote.belongsTo(post, {foreignKey: 'post_id'})
 
 const model = {
 
@@ -156,6 +179,13 @@ const model = {
         const all_post = await post.findAll({  
             raw: true,
             include: [user],
+
+            include: [{
+                model : vote,
+                attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+            }],
+            group: ['post.post_id'],
+            
             order: [
                 ['time', 'DESC'],
             ],
@@ -216,6 +246,30 @@ const model = {
         return new_post;
     },
 
+    async like_post_check (req,res) {	
+
+        const like_post_check = await vote.findAll({
+            where: {
+                user_id: req.session.token,
+                post_id: req.body.post_id,
+            },
+            raw: true,
+        });
+
+        return like_post_check;
+    },
+
+    async like_post (req,res) {	
+
+        const like_post = await vote.create({
+            user_id: req.session.token,
+            post_id: req.body.post_id,
+            raw: true,
+        });
+
+        return like_post;
+    },
+
     async write_comment (req,res) {	
 
         const new_comment = await comment.create({
@@ -243,11 +297,20 @@ const model = {
     async post_profile (req,res) {	
 
         const all_post = await post.findAll({  
+
+                raw: true,
+                include: [user],
+
+                include: [{
+                    model : vote,
+                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+                }],
+                group: ['post.post_id'],
+
                 where: {
                     user_id: req.session.token,
                 },
-                raw: true,
-                include: [user],
+
                 order: [
                     ['time', 'DESC'],
                 ],

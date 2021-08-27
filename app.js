@@ -47,9 +47,11 @@ app.get("/", controller.index);
 
 app.get("/home", controller.home);
 
-app.get("/home/category", controller.category);
+app.get("/forum", controller.forum);
 
-app.get("/home/search", controller.search);
+app.get("/forum/category", controller.category);
+
+app.get("/forum/search", controller.search);
 
 app.get("/about", controller.about);
 
@@ -64,7 +66,9 @@ app.post('/check_login', controller.check_login);
 app.post("/check_register", controller.check_register);
 
 app.post('/write_post', controller.write_post);
-
+//---------------------------------------------
+app.post('/like_post', controller.like_post);
+//---------------------------------------------
 app.post('/write_comment', controller.write_comment);
 
 app.get('/welcome', controller.welcome);

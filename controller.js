@@ -1,23 +1,35 @@
 const model = require('./model');
 
 const controller = {
+
 	index : function(req, res){
 		if (req.session.loggedin) {
 			res.redirect('/home');
 		} else {
-			res.redirect('/login_page');
+			res.redirect('/login');
 		}
 		res.end();
 	},
 
-	home : async function(req, res){
+	home : function(req, res){
+		if (req.session.loggedin) {
+			res.render("home_page",{
+				name : req.session.name,
+			});
+		} else {
+			res.redirect('/login');
+		}
+		res.end();
+	},
+
+	forum : async function(req, res){
 		if (req.session.loggedin) {
 			var all_post = await model.post(req, res);
 			var all_comment = await model.comment(req, res);
 			var category_1 = await model.count_post(req, res, "Ders Notları");
 			var category_2 = await model.count_post(req, res, "Yurtlar");
 			var category_3 = await model.count_post(req, res, "Genel");
-			res.render("home_page", {
+			res.render("forum_page", {
 				all_post : all_post,
 				all_comment : all_comment,
 				name : req.session.name,
@@ -35,7 +47,7 @@ const controller = {
 		if (req.session.loggedin) {
 			var all_post = await model.post_category(req, res, req.query);
 			var all_comment = await model.comment(req, res);
-			res.render("home_page", {
+			res.render("forum_page", {
 				all_post : all_post,
 				all_comment : all_comment,
 				name : req.session.name
@@ -50,7 +62,7 @@ const controller = {
 		if (req.session.loggedin) {
 			var all_post = await model.post_search(req, res, req.query);
 			var all_comment = await model.comment(req, res);
-			res.render("home_page", {
+			res.render("forum_page", {
 				all_post : all_post,
 				all_comment : all_comment,
 				name : req.session.name
@@ -90,7 +102,7 @@ const controller = {
 				req.session.token = new_login.user_id;
 				req.session.name = new_login.name;
 				console.log("Succesful login.");
-				res.redirect('/home');
+				res.redirect('/index');
 				
 			} else {
 				console.log("Incorrect username or password.");
@@ -120,22 +132,32 @@ const controller = {
 		new_post = await model.write_post(req, res);
 			if (new_post.user_id > 0) {
 				console.log("post inserted.");
-				res.redirect('/home');
+				res.redirect('/forum');
 			} else {
 				console.log("post not inserted.");
-				res.redirect('/home');
+				res.redirect('/forum');
 			}			
 			res.end();
 	},
 
+	like_post : async function(req, res){ 
+		like_post_check = await model.like_post_check(req, res);
+		if(like_post_check.length < 1){
+
+			like_post = await model.like_post(req, res);
+		}
+		res.redirect('/forum');			
+		res.end();
+	},
+	
 	write_comment : async function(req, res){
 		new_comment = await model.write_comment(req, res);
 			if (new_comment.user_id > 0) {
 				console.log("comment inserted.");
-				res.redirect('/home');
+				res.redirect('/forum');
 			} else {
 				console.log("comment not inserted.");
-				res.redirect('/home');
+				res.redirect('/forum');
 			}			
 			res.end();
 	},

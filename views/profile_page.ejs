@@ -1,93 +1,39 @@
 <%- include ('partials/header') -%>
-<div class="container">
-    <div class="row mb-5">
-  <!----------------------------------------------------------------------------------------------------------->
-      <div class="col-md-5" >
-        <div class="panel panel-default" style="position: sticky; position: -webkit-sticky; top:100px;">
-          <div class="panel-body">
-            <div class="box box-info">
-              <div class="box-body">
-                <div class="col-sm-9">
-                  <div align="center"> <img alt="User Pic"  src="Photos/itü.jpg" id="profile-image1" class="img-circle img-responsive"/> 
-                    <input id="profile-image-upload" class="hidden" type="file">
-                      
-                  </div>
-  
-                </div>
-                          
-                          <div class="col-sm-7">
-                        
-                            <h4 style="color:#00b1b1;"><%= profile.name%> <%= profile.surname%> </h4></span>          
-                          </div>
-                        
-                          <div class="clearfix"></div>
-                            <hr style="margin:5px 0 5px 0;">
-  
-                          <div class="col-sm-5 col-xs-6 tital " >Student Number:</div><div class="col-sm-7"><%= profile.user_id%></div>
+<!----------------------------------------------------------------------------------------------------------->
+  <div class="container-fluid profile_background" style="background-image: linear-gradient(to left bottom, rgba(242, 242, 242, 0.88) 25%, rgba(242, 242, 242, 0.97) 75%), url('Photos/indir.png')">
+        <div class="row p-5" style="min-height: 40rem">
+            <div class="col-md-4 mb-5">
+                <ul class="list-group ">
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Name & Surname</h5><span class="pl-3"><%= profile.name%> <%= profile.surname%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Student ID</h5><span class="pl-3"><%= profile.user_id%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">E-mail</h5><span class="pl-3"><%= profile.mail%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">University</h5><span class="pl-3"><%= profile.school%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Class</h5><span class="pl-3"><%= profile.class%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Department</h5><span class="pl-3"><%= profile.department%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">About</h5><span class="pl-3"><%= profile.about%></span></li>
+                </ul>
 
-                          <div class="clearfix"></div>
-                          <div class="bot-border"></div>
-  
-                          <div class="col-sm-5 col-xs-6 tital " >Mail:</div><div class="col-sm-7"><%= profile.mail%></div>
-
-                          <div class="clearfix"></div>
-                          <div class="bot-border"></div>
-  
-                          <div class="col-sm-5 col-xs-6 tital " >University:</div><div class="col-sm-7"><%= profile.school%></div>
-  
-                            <div class="clearfix"></div>
-                          <div class="bot-border"></div>
-  
-                          <div class="col-sm-5 col-xs-6 tital " >Department:</div><div class="col-sm-7"><%= profile.department%></div>
-  
-                            <div class="clearfix"></div>
-                          <div class="bot-border"></div>
-  
-                          <div class="col-sm-5 col-xs-6 tital " >Class:</div><div class="col-sm-7"><%= profile.class%></div>
-  
-                          <div class="clearfix"></div>
-                          <div class="bot-border"></div>
-  
-                          <div class="col-sm-5 col-xs-6 tital " >About:</div><div class="col-sm-7"><%= profile.about%></div>
-                          <!-- {% if student_id == info_2['student_id'] %}
-                          <form action="/delete_profile/{{info_2['student_id']}}">
-                                <button style="margin-left: 360px;" class="float-right btn text-white btn-danger border-0" type="submit" class="btn btn-primary">Delete Profile</button>
-                          </form>
-                          {% endif %} -->
-              </div>
             </div>
-          </div> 
-        </div>
-      </div>  
-  <!----------------------------------------------------------------------------------------------------------->
-            <div class="col-md-7">
-              <div class="panel panel-default" style="position: sticky; position: -webkit-sticky; top:100px;">
+            <div class="col-md-6 ml-auto ">
               <% for(var i=0; i<all_post.length; i++) {%>
-              <div class="card m-5">
-                  <h5 class="card-header">Post</h5>
-                  <div class="card-body">
-                      <h5 class="card-title"></h5>
-                    
-                              <p class="card-text"><b><%= profile.name%> <%= profile.surname%></b></p>
-                     
-                      <blockquote class="blockquote mb-3">
-                          <footer class="blockquote-footer"><%= all_post[i].p_text%> </footer>
-                      </blockquote>
-  
-                      <form action="/comment/{{post.post_id}}">
-                          <a class="float-right btn text-white btn-danger border-0"> <i class="fa fa-heart"></i> <%= all_post[i].p_vote%></a>
-                              <button style="margin-left: 360px;" type="submit" class="btn btn-primary">Details</button>
-                      </form>
-                  </div>
-                  <div class="card-footer text-muted">
-                    <%= all_post[i].time%>
-                  </div>
-              </div>
-              <% } %>
+              <div class="card mb-5">
+                      <h5 class="card-header"><%= all_post[i].p_area%></h5>
+                      <div class="card-body">
+                            <h5 class="card-title"><%= profile.name%> <%= profile.surname%></h5>
+                            <p class="card-text" style="font-size: 1.1rem"><%= all_post[i].p_text%></p>
+                            <div class="">
+                                  <span class="float-right">
+                                      <button class="btn  btn-primary "><i class="fas fa-comment"></i></button>
+                                      <button class="btn  btn-danger "><i class="fa fa-heart"> <%= all_post[i]["votes.like"]%></i></button>
+                                  </span>
+                              </div>
+                      </div>
+                      <div class="card-footer text-muted">
+                        <%= all_post[i].time%>
+                      </div>
+                </div>
+                <% } %>
             </div>
-          </div>
-  <!----------------------------------------------------------------------------------------------------------->
-  
+        </div>
     </div>
-  </div>
   <%- include ('partials/footer') -%>

@@ -1,0 +1,170 @@
+<%- include ('partials/header') -%>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/0b461dff30.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+        <div class="container-fulid" style="background-color: #cccccc;">
+
+            <div id="carouselExampleCaptions" class=" container carousel slide" style="height: 25rem;"  data-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+                  </ol>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="/Photos/bad-weather-clouds-cloudy-countryside-355441.jpg" class="d-block w-100 " style="  height: 25rem; object-fit: cover" alt="..." >
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Günlerden bugün..</h5>
+                        <p>Her şeyin zamanı, yaşadığınız O andır… Mutlu olmayı ertelemeyin. Çünkü canınızın istediği zaman ölmeyeceksiniz.</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="/Photos/person-wearing-blue-suit-jacket-1327446.jpg" class="d-block w-100 " style="  height: 25rem; object-fit: cover" alt="...">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Günlerden bugün..</h5>
+                        <p>Hayatta hep mutlu olursam, Hayalini kuracak neyim kalır. -Dostoyevski</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="/Photos/architecture-austria-building-church-356807.jpg" class="d-block w-100 " style="  height: 25rem; object-fit: cover" alt="...">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Günlerden bugün..</h5>
+                        <p>Her bildiğini söyleme, her söylediğini bil. - Clavdius</p>
+                      </div>
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+            </div>
+
+        </div>
+
+
+
+    <div class="container-fluid ">
+        <div class="row p-5">
+            <div class="col-md-3 pb-5">
+                <div class="">
+                    <ul class="list-group mb-3 ">
+                    <li class="list-group-item">
+                      <form action="/home/search" class="d-flex">
+                            <input class="form-control me-2 mr-1 border-success" name="search" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                      </form>
+                    </li>
+
+                </ul>
+                <ul class="list-group">
+
+                    <a href="/home/category?category=Yurtlar" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        Yurtlar
+                        <span class="badge bg-primary text-light rounded-pill"><%= category_1%></span>
+                    </a>
+                    <a href="/home/category?category=Ders Notları" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                      Ders Notları
+                        <span class="badge bg-primary text-light rounded-pill"><%= category_2%></span>
+                    </a>
+                    <a href="/home/category?category=Genel" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                      Genel
+                        <span class="badge bg-primary text-light rounded-pill"><%= category_3%></span>
+                    </a>
+                </ul>
+
+                </div>
+
+            </div>
+            <div class="col-md-8 pl-5 pr-5">
+
+                <form action="/write_post" method="POST" class="mb-5 border p-3 rounded">
+                  <div class="form-group">
+                    <label for="p_text"><b>Post</b></label>
+                    <input type="text" class="form-control" style="height: 10rem" name="p_text" placeholder="write a post..">
+
+                  </div>
+                  <select name="p_area" class="form-control mb-2">
+                      <option selected disabled>Categories</option>
+                      <option value="Ders Notları">Ders Notları</option>
+                      <option value="Yurtlar">Yurtlar</option>
+                      <option value="Genel">Genel</option>
+                  </select>
+                  <div class="overflow-auto">
+                    <button type="submit" class="btn btn-primary float-right mt-2">Submit</button>
+                  </div>
+                </form>
+<!-------------------------------------------------------------------------------------------------------------------->
+<% for(var i=0; i<all_post.length; i++) {%>
+                  <div class="card mb-5">
+                      <h5 class="card-header"><%= all_post[i].p_area%></h5>
+                      <div class="card-body">
+                            <h5 class="card-title"> <%= all_post[i]["user.name"] %> <%= all_post[i]["user.surname"] %></h5>
+                            <p class="card-text" style="font-size: 1.1rem"><%= all_post[i].p_text %></p>
+                            <div class="mb-4">
+                                  <span class="text-muted">
+                                   <%= all_post[i].user_id %>
+                                  </span>
+                                  <!-- //--------------------------------------------- -->
+                                    <span class="float-right">
+                                      <form action="/like_post" method="POST">
+                                        <button href="#click" class="btn  btn-primary "><i class="fas fa-comment"></i></button>
+                                        <button type="submit" class="btn  btn-danger "><i class="fa fa-heart"> <%= all_post[i]["votes.like"]%> </i></button>
+                                        <input type="hidden" name="post_id" style="display: none" value="<%=all_post[i].post_id%>">
+                                  </form>
+                                </span>
+                                  <!-- //--------------------------------------------- -->
+                            </div>
+                      <% for(var j=0; j<all_comment.length; j++) {%>
+                        <%if (all_comment[j].post_id === all_post[i].post_id) { %>
+                            <div class="media  border rounded p-3">
+                                  <div class="media-body">
+                                        <h5 class="mt-0"><%= all_comment[j]["user.name"] %> <%= all_comment[j]["user.surname"] %></h5>
+                                        <div style="font-size: 0.85rem">
+                                           <%= all_comment[j].c_text %>
+                                        </div>
+                                        <div class="text-muted text-right">
+                                          <%= all_comment[j].user_id %>
+                                        </div>
+
+
+                                  </div>
+                            </div>
+                        <% } %>
+                      <% } %>
+                            <form action="/write_comment" method="POST" class="mb-1 mt-2 border p-3 rounded">
+                              <div class="form-group" id="click">
+                                <label for="yazı"><b>Comment</b></label>
+                                <input type="text" class="form-control" style="height: 10rem" name="c_text" placeholder="write a comment..">                                
+                              </div>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                              <input type="hidden" name="post_id" style="display: none" value="<%=all_post[i].post_id%>">
+                            </form>
+                            
+
+                      </div>
+                      <div class="card-footer text-muted">
+                        <%= all_post[i].time%>
+                      </div>
+                </div>
+<% } %>
+<!-------------------------------------------------------------------------------------------------------------------->
+                
+            </div>
+        </div>
+
+    </div>
+
+<%- include ('partials/footer') -%>
