@@ -220,6 +220,11 @@ const model = {
                 },
 
                 {
+                    model : comment,
+                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('comments.post_id')), 'comment']]
+                },
+
+                {
                     model : user,
 
                 }
@@ -233,7 +238,7 @@ const model = {
 
         return all_post;
     },
-
+// llllllllllllllllllllllllllllllllllllllllllll
     async post_category (req,res, param) {	
 
         const all_post = await post.findAll({  
@@ -245,6 +250,11 @@ const model = {
                     {
                         model : vote,
                         attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+                    },
+
+                    {
+                        model : comment,
+                        attributes : [[Sequelize.fn('COUNT', Sequelize.col('comments.post_id')), 'comment']]
                     },
     
                     {
@@ -274,6 +284,11 @@ const model = {
                 {
                     model : vote,
                     attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+                },
+
+                {
+                    model : comment,
+                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('comments.post_id')), 'comment']]
                 },
 
                 {
@@ -368,10 +383,17 @@ const model = {
                 raw: true,
                 include: [user],
 
-                include: [{
-                    model : vote,
-                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
-                }],
+                include: [
+                    {
+                        model : vote,
+                        attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+                    },
+
+                    {
+                        model : comment,
+                        attributes : [[Sequelize.fn('COUNT', Sequelize.col('comments.post_id')), 'comment']]
+                    },
+                ],
                 group: ['post.post_id'],
 
                 where: {

@@ -1,4 +1,17 @@
 <%- include ('partials/header') -%>
+
+    <style>
+        .special-border{
+            border: 1px solid #DEE2E6;
+            border-radius: 5px;
+            transition: 0.32s;
+        }
+        .special-border:hover{
+            box-shadow: 0px 0px 35px -16px rgba(0,0,0,0.75);
+
+        }
+    </style>
+
         <div class="container-fluid ">
         <div class="row p-5">
             <div class="col-md-3 pb-5 ">
@@ -81,82 +94,46 @@
             <!-- Inner main header -->
             <div class="inner-main-header">
                 <a class="nav-link nav-icon rounded-circle nav-link-faded mr-3 d-md-none" href="#" data-toggle="inner-sidebar"><i class="material-icons">arrow_forward_ios</i></a>
-
-
             </div>
             <!-- /Inner main header -->
 
             <!-- Inner main body -->
-
-            <!-- Forum List -->
-            <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
-                <% for(var i=0; i<all_post.length; i++) {%>
-                    <div class="card mb-2">
+            <% for(var i=0; i<all_post.length; i++) {%>
+                <div class="inner-main-body p-2 p-sm-3 collapse id-<%= all_post[i].post_id %> show">
+                    <div class="card mb-2 ">
                         <div class="card-body p-2 p-sm-3">
                             <div class="media forum-item">
-                                <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" />
                                 <div class="media-body">
                                     <h6><a  href="/profile/<%= all_post[i]["user.user_id"] %>" class="nav-link"><%= all_post[i]["user.name"] %> <%= all_post[i]["user.surname"] %></a></h6>
                                     <p class="text-secondary">
-                                        <%= all_post[i].p_text %>
+                                        <p><%= all_post[i].p_text %></p>
                                     </p>
                                     <div class="text-muted ">
                                         <form action="/like_post" method="POST">
                                             <button type="submit" class="float-right btn btn-danger btn-sm ml-1"><i class="far fa-heart"></i> <%= all_post[i]["votes.like"]%></button>
-                                            <!-- ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
-                                            <a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body"><button type="button" class="float-right btn btn-primary btn-sm"><i class="far fa-comment"></i></button></a>
+                                            <a href="#" data-toggle="collapse" data-target=".id-<%= all_post[i].post_id %>" class="text-body">
+                                                <button type="button" class="float-right btn btn-primary btn-sm"><i class="far fa-comment"></i> <%= all_post[i]["comments.comment"]%></button>
+                                            </a>
                                             <input type="hidden" name="post_id" style="display: none" value="<%=all_post[i].post_id%>">
                                         </form>
                                     </div>
-
                                 </div>
-
                             </div>
-                            <div class="text-secondary"><%= all_post[i].time%></div>
+                            <div class="text-secondary font-weight-bold"><%= all_post[i].time%></div>
                         </div>
                     </div>
-                <% } %>
-            </div>
-            <!-- /Forum List -->
-
-            <!-- Forum Detail -->
-            <% for(var i=0; i<all_post.length; i++) {%>
-            <div class="inner-main-body p-2 p-sm-3 collapse forum-content">
-                    <!-- ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
-                    <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-toggle="collapse" data-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a>
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            <div class="media forum-item">
-                                <a href="javascript:void(0)" class="card-link">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle" width="50" alt="User" />
-                                    <small class="d-block text-center text-muted">Newbie</small>
-                                </a>
-                                <div class="media-body ml-3">
-                                    <a href="javascript:void(0)" class="text-secondary"><%= all_post[i]["user.name"] %> <%= all_post[i]["user.surname"] %></a>
-                                    <small class="text-muted ml-2">1 hour ago</small>
-                                    <h5 class="mt-1">Realtime fetching data</h5>
-                                    <div class="mt-3 font-size-sm">
-                                        <p>
-                                            <%= all_post[i].p_text %>
-                                        </p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <% for(var j=0; j<all_comment.length; j++) {%>
-                        <%if (all_comment[j].post_id === all_post[i].post_id) { %>
+                </div>
+                <div class="inner-main-body p-2 m-2 p-sm-3 collapse id-<%= all_post[i].post_id %> special-border overflow-auto">
+                    <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-toggle="collapse" data-target=".id-<%= all_post[i].post_id %>" ><i class="fa fa-arrow-left mr-2"></i>Back</a>
+                    <% for(var j=0; j<all_comment.length; j++) {%> 
+                        <%if (all_comment[j].post_id === all_post[i].post_id) { %>   
                             <div class="card mb-2">
                                 <div class="card-body">
                                     <div class="media forum-item">
-                                        <a href="javascript:void(0)" class="card-link">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle" width="50" alt="User" />
-                                            <small class="d-block text-center text-muted">Pro</small>
-                                        </a>
-                                        <div class="media-body ml-3">
-                                            <a href="javascript:void(0)" class="text-secondary"><%= all_comment[j]["user.name"] %> <%= all_comment[j]["user.surname"] %></a>
-                                            <small class="text-muted ml-2">1 hour ago</small>
+                                        <a href="javascript:void(0)" class="card-link"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle" width="50" alt="User" /> <small class="d-block text-center text-muted">Newbie</small> </a>
+                                        <div class="media-body ml-3"> <a href="javascript:void(0)" class="text-secondary">Mokrani</a> <small class="text-muted ml-2">1 hour ago</small>
+                                            <h5 class="mt-1"><%= all_comment[j]["user.name"] %> <%= all_comment[j]["user.surname"] %></h5>
                                             <div class="mt-3 font-size-sm">
                                                 <p><%= all_comment[j].c_text %></p>
                                             </div>
@@ -166,10 +143,25 @@
                             </div>
                         <% } %>
                     <% } %>
-               
-            </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary btn-sm mb-2 collapse show" type="button" data-toggle="collapse" data-target="#collapseExample" aria-controls="collapseExample">
+                            Comment
+                        </button>
+                    </div>
+                    <div class="collapse" id="collapseExample">
+                        <form action="/write_comment" method="POST" class="mb-2 p-2 ">
+                            <div class="form-group">
+                                <input type="text" class="form-control" style="height: 8rem" name="c_text" placeholder="write a comment..">
+                                <input type="hidden" name="post_id" style="display: none" value="<%=all_post[i].post_id%>">
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             <% } %>
-            <!-- /Forum Detail -->
+
 
             <!-- /Inner main body -->
         </div>
