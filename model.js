@@ -6,6 +6,7 @@ const Sequelize = require('sequelize');
 const { promiseImpl } = require('ejs');
 const { Op } = require("sequelize");
 const uuid = require('uuid');
+options = { multi: true };
 
 // connect db
 const db = new Sequelize("uni_media", "root", "penguen123", {
@@ -127,17 +128,50 @@ user.sync().then(() => {
     console.log('vote table created');
 });
 
-user.hasMany(post, {foreignKey: 'user_id'})
-post.belongsTo(user, {foreignKey: 'user_id'})
+user.hasMany(post, {
+    foreignKey: 'user_id',
+    onDelete: 'cascade',
+    hooks:true })
+post.belongsTo(user, {
+    foreignKey: 'user_id',
+    onDelete: 'cascade',
+    hooks:true })
 
-user.hasMany(comment, {foreignKey: 'user_id'})
-comment.belongsTo(user, {foreignKey: 'user_id'})
+user.hasMany(comment, {
+    foreignKey: 'user_id',
+    onDelete: 'cascade',
+    hooks:true })
+comment.belongsTo(user, {
+    foreignKey: 'user_id',
+    onDelete: 'cascade',
+    hooks:true })
 
-user.hasMany(vote, {foreignKey: 'user_id'})
-vote.belongsTo(user, {foreignKey: 'user_id'})
+post.hasMany(comment, {
+    foreignKey: 'post_id',
+    onDelete: 'cascade',
+    hooks:true })
+comment.belongsTo(post, {
+    foreignKey: 'user_id',
+    onDelete: 'cascade',
+    hooks:true })
 
-post.hasMany(vote, {foreignKey: 'post_id'})
-vote.belongsTo(post, {foreignKey: 'post_id'})
+user.hasMany(vote, {
+    foreignKey: 'user_id',
+    onDelete: 'cascade',
+    hooks:true })
+vote.belongsTo(user, {
+    foreignKey: 'user_id',
+    onDelete: 'cascade',
+    hooks:true })
+
+post.hasMany(vote, {
+    foreignKey: 'post_id',
+    onDelete: 'cascade',
+    hooks:true })
+vote.belongsTo(post, {
+    foreignKey: 'post_id',
+    onDelete: 'cascade',
+    hooks:true })
 
 const model = {
 
@@ -153,7 +187,7 @@ const model = {
             raw: true,
         });
 
-        return new_login[0];
+        return new_login;
     },
 
     async check_register (req,res) {	
@@ -178,12 +212,18 @@ const model = {
 
         const all_post = await post.findAll({  
             raw: true,
-            include: [user],
 
-            include: [{
-                model : vote,
-                attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
-            }],
+            include: [
+                {
+                    model : vote,
+                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+                },
+
+                {
+                    model : user,
+
+                }
+        ],
             group: ['post.post_id'],
             
             order: [
@@ -201,7 +241,18 @@ const model = {
                     p_area: param.category
                 },
                 raw: true,
-                include: [user],
+                include: [
+                    {
+                        model : vote,
+                        attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+                    },
+    
+                    {
+                        model : user,
+    
+                    }
+                ],
+                group: ['post.post_id'],
                 order: [
                     ['time', 'DESC'],
                 ],
@@ -213,12 +264,28 @@ const model = {
     async post_search (req,res, param) {	
 
         const all_post = await post.findAll({
-            limit: 10,
             where: {
                 p_text: {
                     [Op.like]: '%' + param.search + '%'
                 }
-        }});
+            },
+            raw: true,
+            include: [
+                {
+                    model : vote,
+                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+                },
+
+                {
+                    model : user,
+
+                }
+            ],
+            group: ['post.post_id'],
+            order: [
+                ['time', 'DESC'],
+            ],
+    });
 
         return all_post;
     },
@@ -282,11 +349,11 @@ const model = {
         return new_comment;
     },
 
-    async show_profile (req,res) {	
+    async show_profile (req,res, param) {	
 
         const profile = await user.findAll({  
                 where: {
-                    user_id: req.session.token,
+                    user_id: param.user_id,
                 },
                 raw: true,
         });
@@ -294,7 +361,7 @@ const model = {
         return profile[0];
     },
 
-    async post_profile (req,res) {	
+    async post_profile (req,res, param) {	
 
         const all_post = await post.findAll({  
 
@@ -308,7 +375,7 @@ const model = {
                 group: ['post.post_id'],
 
                 where: {
-                    user_id: req.session.token,
+                    user_id: param.user_id,
                 },
 
                 order: [
@@ -319,7 +386,7 @@ const model = {
         return all_post;
     },
 
-    async count_post (req,res, category) {	
+    async count_post (req, res, category) {	
 
         const num_post = await post.count({  
                 where: {
@@ -332,6 +399,33 @@ const model = {
         });
 
         return num_post;
+    },
+
+    async update_profile (req,res, param) {	
+
+        const update_profile = await user.update(
+
+            {
+                mail: req.body.mail,
+                school: req.body.school,
+                class: req.body.class,
+                department: req.body.department,
+            },
+            {where: { user_id: param.user_id }}
+        );
+            
+        return update_profile;
+    },
+
+    async delete_post (req,res, param) {	
+
+        const delete_post = await post.destroy({  
+                where: {
+                    post_id: param.post_id,
+                },
+        });
+
+        return delete_post;
     },
 }
 

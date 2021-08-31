@@ -15,80 +15,89 @@ const controller = {
 		if (req.session.loggedin) {
 			res.render("home_page",{
 				name : req.session.name,
+				id : req.session.token,
 			});
 		} else {
 			res.redirect('/login');
+			res.end();
 		}
-		res.end();
 	},
 
 	forum : async function(req, res){
 		if (req.session.loggedin) {
 			var all_post = await model.post(req, res);
 			var all_comment = await model.comment(req, res);
-			var category_1 = await model.count_post(req, res, "Ders Notları");
-			var category_2 = await model.count_post(req, res, "Yurtlar");
+			var category_1 = await model.count_post(req, res, "Yurtlar");
+			var category_2 = await model.count_post(req, res, "Ders Notları");
 			var category_3 = await model.count_post(req, res, "Genel");
 			res.render("forum_page", {
 				all_post : all_post,
 				all_comment : all_comment,
 				name : req.session.name,
+				id : req.session.token,
 				category_1 : category_1,
 				category_2 : category_2,
 				category_3 : category_3
 			});
 		} else {
 			res.redirect('/login');
+			res.end();
 		}
-		res.end();
 	},
 
 	category : async function(req, res){
 		if (req.session.loggedin) {
 			var all_post = await model.post_category(req, res, req.query);
 			var all_comment = await model.comment(req, res);
+			var category_1 = await model.count_post(req, res, "Yurtlar");
+			var category_2 = await model.count_post(req, res, "Ders Notları");
+			var category_3 = await model.count_post(req, res, "Genel");
 			res.render("forum_page", {
 				all_post : all_post,
 				all_comment : all_comment,
-				name : req.session.name
+				name : req.session.name,
+				id : req.session.token,
+				category_1 : category_1,
+				category_2 : category_2,
+				category_3 : category_3
 			});
 		} else {
 			res.redirect('/login');
+			res.end();
 		}
-		res.end();
 	},
 
 	search : async function(req, res){
 		if (req.session.loggedin) {
 			var all_post = await model.post_search(req, res, req.query);
 			var all_comment = await model.comment(req, res);
+			var category_1 = await model.count_post(req, res, "Yurtlar");
+			var category_2 = await model.count_post(req, res, "Ders Notları");
+			var category_3 = await model.count_post(req, res, "Genel");
 			res.render("forum_page", {
 				all_post : all_post,
 				all_comment : all_comment,
-				name : req.session.name
+				name : req.session.name,
+				id : req.session.token,
+				category_1 : category_1,
+				category_2 : category_2,
+				category_3 : category_3
 			});
 		} else {
 			res.redirect('/login');
+			res.end();
 		}
-		res.end();
 	},
 
 	about : function(req, res){
 		if (req.session.loggedin) {
-			res.render("about_page", {name : req.session.name});
+			res.render("about_page", {
+				name : req.session.name,
+				id : req.session.token,});
 		} else {
 			res.redirect('/login');
+			res.end();
 		}
-		res.end();
-	},
-
-	contact : function(req, res){
-		if (req.session.loggedin) {
-			res.render("contact_page", {name : req.session.name});
-		} else {
-			res.redirect('/login');
-		}
-		res.end();
 	},
 
 	login : function(req, res){
@@ -97,10 +106,10 @@ const controller = {
 
 	check_login : async function(req, res) {
 		var new_login = await model.check_login(req, res);
-			if (new_login.user_id > 0) {
+			if (new_login.length > 0) {
 				req.session.loggedin = true;
-				req.session.token = new_login.user_id;
-				req.session.name = new_login.name;
+				req.session.token = new_login[0].user_id;
+				req.session.name = new_login[0].name;
 				console.log("Succesful login.");
 				res.redirect('/index');
 				
@@ -169,17 +178,95 @@ const controller = {
 	profile : async function(req, res){
 
 		if (req.session.loggedin) {
-			var profile = await model.show_profile(req, res);
-			var all_post = await model.post_profile(req, res);
+			var profile = await model.show_profile(req, res, req.params);
+			var all_post = await model.post_profile(req, res, req.params);
 			res.render("profile_page", {
 				all_post : all_post,
 				profile : profile,
-				name : req.session.name
+				name : req.session.name,
+				id : req.session.token,
 			});
 		} else {
 			res.redirect('/login');
+			res.end();
 		}
-		res.end();
+	},
+
+	profile_edit : async function(req, res){
+
+		if (req.session.token == req.params.user_id) {
+			var profile = await model.show_profile(req, res, req.params);
+			var all_post = await model.post_profile(req, res, req.params);
+			res.render("profile_edit_page", {
+				all_post : all_post,
+				profile : profile,
+				name : req.session.name,
+				id : req.session.token,
+			});
+		} else {
+			res.redirect('/login');
+			res.end();
+		}
+	},
+
+	update_profile : async function(req, res){
+
+		if (req.session.loggedin) {
+			var update_profile = await model.update_profile(req, res, req.params);
+			var profile = await model.show_profile(req, res, req.params);
+			var all_post = await model.post_profile(req, res, req.params);
+			res.render("profile_page", {
+				all_post : all_post,
+				profile : profile,
+				name : req.session.name,
+				id : req.session.token,
+			});
+		} else {
+			res.redirect('/login');
+			res.end();
+		}
+	},
+
+	delete_post : async function(req, res){
+
+		if (req.session.token == req.params.user_id) {
+			var delete_post = await model.delete_post(req, res, req.params);
+			var profile = await model.show_profile(req, res, req.params);
+			var all_post = await model.post_profile(req, res, req.params);
+			res.render("profile_edit_page", {
+				all_post : all_post,
+				profile : profile,
+				name : req.session.name,
+				id : req.session.token,
+			});
+		} else {
+			res.redirect('/login');
+			res.end();
+		}
+	},
+
+	dormitory : function(req, res){
+
+		if (req.session.loggedin) {
+			res.render("dormitories_page", {
+				name : req.session.name,
+				id : req.session.token,});
+		} else {
+			res.redirect('/login');
+			res.end();
+		}
+	},
+
+	scholarship : function(req, res){
+
+		if (req.session.loggedin) {
+			res.render("scholarship_page", {
+				name : req.session.name,
+				id : req.session.token,});
+		} else {
+			res.redirect('/login');
+			res.end();
+		}
 	},
 
 	logout : function(req, res){

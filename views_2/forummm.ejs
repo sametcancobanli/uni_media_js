@@ -1,5 +1,16 @@
 <%- include ('partials/header') -%>
-        <div class="container-fluid ">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/0b461dff30.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <div class="container-fluid ">
         <div class="row p-5">
             <div class="col-md-3 pb-5 ">
                 <div class="">
@@ -50,13 +61,13 @@
 
                     <ul class="list-group mb-3 ">
                         <li class="list-group-item">
-                            <form action="/forum/search" class="d-flex">
+                          <form action="/forum/search" class="d-flex">
                                 <input class="form-control me-2 mr-1 border-success" name="search" type="search" placeholder="Search" aria-label="Search">
                                 <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
-                            </form>
+                          </form>
                         </li>
-
                     </ul>
+
                     <ul class="list-group">
 
                         <a href="/forum/category?category=Yurtlar" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
@@ -94,25 +105,22 @@
                     <div class="card mb-2">
                         <div class="card-body p-2 p-sm-3">
                             <div class="media forum-item">
-                                <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
                                 <div class="media-body">
-                                    <h6><a  href="/profile/<%= all_post[i]["user.user_id"] %>" class="nav-link"><%= all_post[i]["user.name"] %> <%= all_post[i]["user.surname"] %></a></h6>
+                                    <h6><%= all_post[i]["user.name"] %> <%= all_post[i]["user.surname"] %></h6>
                                     <p class="text-secondary">
                                         <%= all_post[i].p_text %>
                                     </p>
                                     <div class="text-muted ">
-                                        <form action="/like_post" method="POST">
-                                            <button type="submit" class="float-right btn btn-danger btn-sm ml-1"><i class="far fa-heart"></i> <%= all_post[i]["votes.like"]%></button>
-                                            <!-- ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
-                                            <a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body"><button type="button" class="float-right btn btn-primary btn-sm"><i class="far fa-comment"></i></button></a>
-                                            <input type="hidden" name="post_id" style="display: none" value="<%=all_post[i].post_id%>">
-                                        </form>
+                                      <form action="/like_post" method="POST">
+                                          <button type="submit" class="float-right btn btn-danger btn-sm ml-1"><i class="far fa-heart"></i> <%= all_post[i]["votes.like"]%></button>
+                                          <a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body"><button type="button" class="float-right btn btn-primary btn-sm"><i class="far fa-comment"></i></button></a>
+                                          <input type="hidden" name="post_id" style="display: none" value="<%=all_post[i].post_id%>">
+                                      </form>
                                     </div>
-
                                 </div>
-
-                            </div>
-                            <div class="text-secondary"><%= all_post[i].time%></div>
+                              </div>
+                            <div class="text-secondary text-muted"><%= all_post[i].time%></div>
                         </div>
                     </div>
                 <% } %>
@@ -120,61 +128,53 @@
             <!-- /Forum List -->
 
             <!-- Forum Detail -->
-            <% for(var i=0; i<all_post.length; i++) {%>
             <div class="inner-main-body p-2 p-sm-3 collapse forum-content">
-                    <!-- ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
-                    <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-toggle="collapse" data-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a>
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            <div class="media forum-item">
-                                <a href="javascript:void(0)" class="card-link">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle" width="50" alt="User" />
-                                    <small class="d-block text-center text-muted">Newbie</small>
-                                </a>
-                                <div class="media-body ml-3">
-                                    <a href="javascript:void(0)" class="text-secondary"><%= all_post[i]["user.name"] %> <%= all_post[i]["user.surname"] %></a>
-                                    <small class="text-muted ml-2">1 hour ago</small>
-                                    <h5 class="mt-1">Realtime fetching data</h5>
-                                    <div class="mt-3 font-size-sm">
-                                        <p>
-                                            <%= all_post[i].p_text %>
-                                        </p>
-                                    </div>
-                                </div>
+              <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-toggle="collapse" data-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a>
+              <div class="card mb-2">
+                  <div class="card-body">
+                      <div class="media forum-item">
+                          <a href="javascript:void(0)" class="card-link">
+                              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle" width="50" alt="User" />
+                              <small class="d-block text-center text-muted">Newbie</small>
+                          </a>
+                          <div class="media-body ml-3">
+                              <a href="javascript:void(0)" class="text-secondary">Mokrani</a>
+                              <small class="text-muted ml-2">1 hour ago</small>
+                              <h5 class="mt-1">Realtime fetching data</h5>
+                              <div class="mt-3 font-size-sm">
+                                  <p>Hellooo :)</p>
+                                  <p>
+                                      I'm newbie with laravel and i want to fetch data from database in realtime for my dashboard anaytics and i found a solution with ajax but it dosen't work if any one have a simple solution it will be
+                                      helpful
+                                  </p>
+                                  <p>Thank</p>
+                              </div>
+                          </div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <% for(var j=0; j<all_comment.length; j++) {%>
-                        <%if (all_comment[j].post_id === all_post[i].post_id) { %>
-                            <div class="card mb-2">
-                                <div class="card-body">
-                                    <div class="media forum-item">
-                                        <a href="javascript:void(0)" class="card-link">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle" width="50" alt="User" />
-                                            <small class="d-block text-center text-muted">Pro</small>
-                                        </a>
-                                        <div class="media-body ml-3">
-                                            <a href="javascript:void(0)" class="text-secondary"><%= all_comment[j]["user.name"] %> <%= all_comment[j]["user.surname"] %></a>
-                                            <small class="text-muted ml-2">1 hour ago</small>
-                                            <div class="mt-3 font-size-sm">
-                                                <p><%= all_comment[j].c_text %></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <% } %>
-                    <% } %>
-               
+                      </div>
+                  </div>
+              </div>
+              <div class="card mb-2">
+                  <div class="card-body">
+                      <div class="media forum-item">
+                          <a href="javascript:void(0)" class="card-link">
+                              <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle" width="50" alt="User" />
+                              <small class="d-block text-center text-muted">Pro</small>
+                          </a>
+                          <div class="media-body ml-3">
+                              <a href="javascript:void(0)" class="text-secondary">drewdan</a>
+                              <small class="text-muted ml-2">1 hour ago</small>
+                              <div class="mt-3 font-size-sm">
+                                  <p>What exactly doesn't work with your ajax calls?</p>
+                                  <p>Also, WebSockets are a great solution for realtime data on a dashboard. Laravel offers this out of the box using broadcasting</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
             </div>
-            <% } %>
-            <!-- /Forum Detail -->
-
-            <!-- /Inner main body -->
+            <!-- /Forum List -->
+            </div>
         </div>
-        </div>
-
     </div>
-    
-    <%- include ('partials/footer') -%>
+<%- include ('partials/footer') -%>

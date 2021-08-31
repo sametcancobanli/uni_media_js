@@ -1,0 +1,39 @@
+<%- include ('partials/header') -%>
+<!----------------------------------------------------------------------------------------------------------->
+  <div class="container-fluid profile_background" style="background-image: linear-gradient(to left bottom, rgba(242, 242, 242, 0.88) 25%, rgba(242, 242, 242, 0.97) 75%), url('Photos/indir.png')">
+        <div class="row p-5" style="min-height: 40rem">
+            <div class="col-md-4 mb-5">
+                <ul class="list-group ">
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Name & Surname</h5><span class="pl-3"><%= profile.name%> <%= profile.surname%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Student ID</h5><span class="pl-3"><%= profile.user_id%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">E-mail</h5><span class="pl-3"><%= profile.mail%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">University</h5><span class="pl-3"><%= profile.school%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Class</h5><span class="pl-3"><%= profile.class%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Department</h5><span class="pl-3"><%= profile.department%></span></li>
+                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">About</h5><span class="pl-3"><%= profile.about%></span></li>
+                </ul>
+
+            </div>
+            <div class="col-md-6 ml-auto ">
+              <% for(var i=0; i<all_post.length; i++) {%>
+              <div class="card mb-5">
+                      <h5 class="card-header"><%= all_post[i].p_area%></h5>
+                      <div class="card-body">
+                            <h5 class="card-title"><%= profile.name%> <%= profile.surname%></h5>
+                            <p class="card-text" style="font-size: 1.1rem"><%= all_post[i].p_text%></p>
+                            <div class="">
+                                  <span class="float-right">
+                                      <button class="btn  btn-primary "><i class="fas fa-comment"></i></button>
+                                      <button class="btn  btn-danger "><i class="fa fa-heart"> <%= all_post[i]["votes.like"]%></i></button>
+                                  </span>
+                              </div>
+                      </div>
+                      <div class="card-footer text-muted">
+                        <%= all_post[i].time%>
+                      </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+  <%- include ('partials/footer') -%>

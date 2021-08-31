@@ -1,39 +1,132 @@
 <%- include ('partials/header') -%>
-<!----------------------------------------------------------------------------------------------------------->
-  <div class="container-fluid profile_background" style="background-image: linear-gradient(to left bottom, rgba(242, 242, 242, 0.88) 25%, rgba(242, 242, 242, 0.97) 75%), url('Photos/indir.png')">
-        <div class="row p-5" style="min-height: 40rem">
-            <div class="col-md-4 mb-5">
-                <ul class="list-group ">
-                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Name & Surname</h5><span class="pl-3"><%= profile.name%> <%= profile.surname%></span></li>
-                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Student ID</h5><span class="pl-3"><%= profile.user_id%></span></li>
-                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">E-mail</h5><span class="pl-3"><%= profile.mail%></span></li>
-                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">University</h5><span class="pl-3"><%= profile.school%></span></li>
-                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Class</h5><span class="pl-3"><%= profile.class%></span></li>
-                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">Department</h5><span class="pl-3"><%= profile.department%></span></li>
-                  <li class="list-group-item"><h5 style="border-bottom: 1px solid #ABCAEB;">About</h5><span class="pl-3"><%= profile.about%></span></li>
-                </ul>
+       <div class="container mt-5">
+        <div class="main-body">
+
+              <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex flex-column align-items-center text-center">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                        <div class="mt-3">
+                          <h4><%= profile.name%> <%= profile.surname%></h4>
+                          <!-- <p class="text-secondary mb-1"><%= profile.about%></p> -->
+                          <p class="text-muted font-size-sm"><%= profile.about%></p>
+                          <!-- <button class="btn btn-primary">Follow</button>
+                          <button class="btn btn-outline-primary">Message</button> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-8">
+                  <div class="card mb-3">
+                    <div class="card-body">
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Full Name</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <%= profile.name%> <%= profile.surname%>
+                        </div>
+                      </div>
+                      <hr>
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Student ID</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <%= profile.user_id%>
+                        </div>
+                      </div>
+                      <hr>
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <%= profile.mail%>
+                        </div>
+                      </div>
+                      <hr>
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">University</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <%= profile.school%>
+                        </div>
+                      </div>
+                      <hr>
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Class</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <%= profile.class%>
+                        </div>
+                      </div>
+                      <hr>
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Department</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <%= profile.department%>
+                        </div>
+                      </div>
+                      <% if(profile.user_id === id){ %>
+                        <hr>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <a class="btn btn-info " href="/profile/<%= profile.user_id %>/edit">Edit</a>
+                        </div>
+                      </div>
+                      <% } %>
+
+                    </div>
+                  </div>
+
+                <div class="row gutters-sm">
+                    <% for(var i=0; i<all_post.length; i++) {%>
+                    <div class="col-sm-12 mb-3">
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <div class="media forum-item">
+                              <a href="javascript:void(0)" class="card-link">
+                                  <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="rounded-circle" width="50" alt="User" />
+                                  <small class="d-block text-center text-muted">Newbie</small>
+                              </a>
+                              <div class="media-body ml-3">
+                                  <a href="javascript:void(0)" class="text-secondary"><%= profile.name%> <%= profile.surname%></a>
+                                  <small class="text-muted ml-2"><%= all_post[i].time%></small>
+                                  <h5 class="mt-1"><%= all_post[i].p_area%></h5>
+                                  <div class="mt-3 font-size-sm">
+                                      <p><%= all_post[i].p_text%></p>
+                                  </div>
+                              </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+
+                    </div>
+                  </div>
+
+
+
+                </div>
+              </div>
 
             </div>
-            <div class="col-md-6 ml-auto ">
-              <% for(var i=0; i<all_post.length; i++) {%>
-              <div class="card mb-5">
-                      <h5 class="card-header"><%= all_post[i].p_area%></h5>
-                      <div class="card-body">
-                            <h5 class="card-title"><%= profile.name%> <%= profile.surname%></h5>
-                            <p class="card-text" style="font-size: 1.1rem"><%= all_post[i].p_text%></p>
-                            <div class="">
-                                  <span class="float-right">
-                                      <button class="btn  btn-primary "><i class="fas fa-comment"></i></button>
-                                      <button class="btn  btn-danger "><i class="fa fa-heart"> <%= all_post[i]["votes.like"]%></i></button>
-                                  </span>
-                              </div>
-                      </div>
-                      <div class="card-footer text-muted">
-                        <%= all_post[i].time%>
-                      </div>
-                </div>
-                <% } %>
-            </div>
-        </div>
     </div>
-  <%- include ('partials/footer') -%>
+
+<%- include ('partials/footer') -%>

@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <title>Uni Media</title>
+    <title>İTÜ Medya</title>
 
     <link rel="stylesheet" type="text/css" href="/style.css"> 
 
@@ -22,7 +22,7 @@
             <div class="container">
 
                 <a href="/" class="navbar-brand">
-                    <i class="fa fa-shield"></i></i>&nbsp;Uni Media
+                    <i class="fa fa-shield"></i></i>&nbsp;İTÜ Medya
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -37,39 +37,45 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="/about" class="nav-link">
-                                About
+                        <li class="nav-item ">
+                            <a href="/dormitory" class="nav-link">
+                                Yurtlar
                             </a>
                         </li>
 
-                        <li class="nav-item mr-5">
-                            <a href="/contact" class="nav-link">
-                                Contact
+                        <li class="nav-item ">
+                            <a href="/scholarship" class="nav-link">
+                                Burslar
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/about" class="nav-link">
+                                Hakkımızda
                             </a>
                         </li>
                     
                         <% if(name.length > 0){ %>
                         <li class="nav-item">
-                            <a  href="/profile" class="nav-link">
-                                Hello <b><%= name %></b>
+                            <a  href="/profile/<%= id %>" class="nav-link">
+                                Selam <b><%= name %></b>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/logout" class="nav-link">
-                                Log out
+                                Çıkış Yap
                             </a>
                         </li>
 
                         <%} else { %>
                         <li class="nav-item">
                             <a href="/login" class="nav-link">
-                                Login
+                                Giriş Yap
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/register" class="nav-link">
-                                Register
+                                Kayıt Ol
                             </a>
                         </li>
                         <% } %>

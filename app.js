@@ -55,8 +55,6 @@ app.get("/forum/search", controller.search);
 
 app.get("/about", controller.about);
 
-app.get("/contact", controller.contact);
-
 app.get("/login", controller.login);
 
 app.get("/register", controller.register);
@@ -66,14 +64,24 @@ app.post('/check_login', controller.check_login);
 app.post("/check_register", controller.check_register);
 
 app.post('/write_post', controller.write_post);
-//---------------------------------------------
+
 app.post('/like_post', controller.like_post);
-//---------------------------------------------
+
 app.post('/write_comment', controller.write_comment);
 
 app.get('/welcome', controller.welcome);
 
-app.get('/profile', controller.profile);
+app.get('/profile/:user_id', controller.profile);
+
+app.get('/profile/:user_id/edit', controller.profile_edit);
+
+app.post('/profile/:user_id/updated', controller.update_profile);
+
+app.get('/profile/:user_id/delete_post/:post_id', controller.delete_post);
+
+app.get('/dormitory', controller.dormitory);
+
+app.get('/scholarship', controller.scholarship);
 
 app.get('/logout', controller.logout);
 
