@@ -7,6 +7,8 @@ const { promiseImpl } = require('ejs');
 const { Op } = require("sequelize");
 const uuid = require('uuid');
 options = { multi: true };
+const moment = require('moment-timezone');
+const { DataTypes } = require("sequelize");
 
 // connect db
 const db = new Sequelize("uni_media", "root", "penguen123", {
@@ -83,9 +85,7 @@ const post = db.define('post', {
         type: Sequelize.INTEGER
     },
     time: {
-        type: 'TIMESTAMP',
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        allowNull: false
+        type: Sequelize.STRING(50),
     },
 });
 user.sync().then(() => {
@@ -322,6 +322,7 @@ const model = {
             p_text: req.body.p_text,
             p_area: req.body.p_area,
             p_vote: 0,
+            time : moment(new Date()).format('MMMM Do YYYY, h:mm:ss a'),
             raw: true,
         });
 
