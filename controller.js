@@ -26,12 +26,14 @@ const controller = {
 	forum : async function(req, res){
 		if (req.session.loggedin) {
 			var all_post = await model.post(req, res);
+			var all_like = await model.like(req, res);//1
 			var all_comment = await model.comment(req, res);
 			var category_1 = await model.count_post(req, res, "Yurtlar");
 			var category_2 = await model.count_post(req, res, "Ders Notları");
 			var category_3 = await model.count_post(req, res, "Genel");
 			res.render("forum_page", {
 				all_post : all_post,
+				all_like : all_like,//2
 				all_comment : all_comment,
 				name : req.session.name,
 				id : req.session.token,
@@ -48,12 +50,14 @@ const controller = {
 	category : async function(req, res){
 		if (req.session.loggedin) {
 			var all_post = await model.post_category(req, res, req.query);
+			var all_like = await model.like_category(req, res, req.query);//1
 			var all_comment = await model.comment(req, res);
 			var category_1 = await model.count_post(req, res, "Yurtlar");
 			var category_2 = await model.count_post(req, res, "Ders Notları");
 			var category_3 = await model.count_post(req, res, "Genel");
 			res.render("forum_page", {
 				all_post : all_post,
+				all_like : all_like,//2
 				all_comment : all_comment,
 				name : req.session.name,
 				id : req.session.token,
@@ -70,12 +74,14 @@ const controller = {
 	search : async function(req, res){
 		if (req.session.loggedin) {
 			var all_post = await model.post_search(req, res, req.query);
+			var all_like = await model.like_search(req, res, req.query);//1
 			var all_comment = await model.comment(req, res);
 			var category_1 = await model.count_post(req, res, "Yurtlar");
 			var category_2 = await model.count_post(req, res, "Ders Notları");
 			var category_3 = await model.count_post(req, res, "Genel");
 			res.render("forum_page", {
 				all_post : all_post,
+				all_like : all_like,//2
 				all_comment : all_comment,
 				name : req.session.name,
 				id : req.session.token,
@@ -155,6 +161,10 @@ const controller = {
 
 			like_post = await model.like_post(req, res);
 		}
+		else{//4
+
+            dislike_post = await model.dislike_post(req, res);
+        }
 		res.redirect('/forum');			
 		res.end();
 	},

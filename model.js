@@ -76,7 +76,7 @@ const post = db.define('post', {
         type: Sequelize.INTEGER,
     },
     p_text: {
-        type: Sequelize.STRING(140)
+        type: Sequelize.STRING(500)
     },
     p_area: {
         type: Sequelize.STRING(50)
@@ -215,11 +215,6 @@ const model = {
 
             include: [
                 {
-                    model : vote,
-                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
-                },
-
-                {
                     model : comment,
                     attributes : [[Sequelize.fn('COUNT', Sequelize.col('comments.post_id')), 'comment']]
                 },
@@ -235,8 +230,28 @@ const model = {
                 ['time', 'DESC'],
             ],
     });
-
         return all_post;
+    },
+
+    async like (req,res) {//3
+
+        const all_like = await post.findAll({
+            raw: true,
+
+            include: [
+                {
+                    model : vote,
+                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+                },
+        ],
+            group: ['post.post_id'],
+
+            order: [
+                ['time', 'DESC'],
+            ],
+    });
+
+        return all_like;
     },
 // llllllllllllllllllllllllllllllllllllllllllll
     async post_category (req,res, param) {	
@@ -247,11 +262,7 @@ const model = {
                 },
                 raw: true,
                 include: [
-                    {
-                        model : vote,
-                        attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
-                    },
-
+                   
                     {
                         model : comment,
                         attributes : [[Sequelize.fn('COUNT', Sequelize.col('comments.post_id')), 'comment']]
@@ -271,6 +282,30 @@ const model = {
         return all_post;
     },
 
+    async like_category (req,res,param) {//3
+
+        const all_like = await post.findAll({
+            where: {
+                p_area: param.category
+            },
+            raw: true,
+            include: [
+                {
+                    model : vote,
+                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+                },
+        ],
+            group: ['post.post_id'],
+
+            order: [
+                ['time', 'DESC'],
+            ],
+    });
+
+        return all_like;
+    },
+    
+
     async post_search (req,res, param) {	
 
         const all_post = await post.findAll({
@@ -281,11 +316,7 @@ const model = {
             },
             raw: true,
             include: [
-                {
-                    model : vote,
-                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
-                },
-
+                
                 {
                     model : comment,
                     attributes : [[Sequelize.fn('COUNT', Sequelize.col('comments.post_id')), 'comment']]
@@ -303,6 +334,31 @@ const model = {
     });
 
         return all_post;
+    },
+
+    async like_search (req,res,param) {//3
+
+        const all_like = await post.findAll({
+            where: {
+                p_text: {
+                    [Op.like]: '%' + param.search + '%'
+                }
+            },
+            raw: true,
+            include: [
+                {
+                    model : vote,
+                    attributes : [[Sequelize.fn('COUNT', Sequelize.col('votes.post_id')), 'like']]
+                },
+        ],
+            group: ['post.post_id'],
+
+            order: [
+                ['time', 'DESC'],
+            ],
+    });
+
+        return all_like;
     },
 
     async comment (req,res) {	
@@ -351,6 +407,20 @@ const model = {
         });
 
         return like_post;
+    },
+    
+    async dislike_post (req,res) {    //5
+
+        const dislike_post = await vote.destroy({
+
+            where: {
+                user_id: req.session.token,
+                post_id: req.body.post_id,
+            },
+            raw: true,
+        });
+
+        return dislike_post;
     },
 
     async write_comment (req,res) {	

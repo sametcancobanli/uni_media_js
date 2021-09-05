@@ -1,0 +1,68 @@
+<nav class="navbar bg-dark navbar-expand-sm navbar-dark sticky-top">
+    <div class="container">
+
+        <a href="/" class="navbar-brand">
+            <i class="fa fa-shield"></i></i>&nbsp;İTÜ Medya
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbarCollapse" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item ">
+                    <a href="/forum" class="nav-link">
+                        Forum
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a href="/dormitory" class="nav-link">
+                        Yurtlar
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a href="/scholarship" class="nav-link">
+                        Burslar
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/about" class="nav-link">
+                        Hakkımızda
+                    </a>
+                </li>
+
+                <% if(name.length> 0){ %>
+                    <li class="nav-item">
+                        <a href="/profile/<%= id %>" class="nav-link">
+                            Selam <b>
+                                <%= name %>
+                            </b>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link">
+                            Çıkış Yap
+                        </a>
+                    </li>
+
+                    <%} else { %>
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link">
+                                Giriş Yap
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/register" class="nav-link">
+                                Kayıt Ol
+                            </a>
+                        </li>
+                        <% } %>
+
+            </ul>
+        </div>
+    </div>
+</nav>

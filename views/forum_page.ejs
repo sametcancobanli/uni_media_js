@@ -18,6 +18,38 @@
                     box-shadow: 0px 0px 35px -16px rgba(0, 0, 0, 0.75);
 
                 }
+                .forum-profile-link {
+                    color: black;
+                    transition: 0.2s;
+                }
+                .forum-profile-link:hover {
+                    color:rgb(81, 81, 81) ;
+                    font-size: 1.04rem;
+                }
+                @media only screen and (max-width: 940px) {
+                    /* For mobile phones: */
+                    .text-area {
+                      max-width: 20rem;
+                    }
+                  }
+                @media only screen and (max-width: 825px) {
+                    /* For mobile phones: */
+                    .text-area {
+                      max-width: 15rem;
+                    }
+                  }
+                @media only screen and (max-width: 480px) {
+                    /* For mobile phones: */
+                    .text-area {
+                      max-width: 10rem;
+                    }
+                  }
+                @media only screen and (max-width: 380px) {
+                    /* For mobile phones: */
+                    .text-area {
+                      max-width: 5rem;
+                    }
+                  }
             </style>
 
             <div class="container-fluid" style="min-height: 35rem;">
@@ -115,7 +147,7 @@
 
                     </div>
 
-                    <div class="inner-main col-md-8 border rounded" >
+                    <div class="inner-main col-md-8 border rounded">
                         <!-- Inner main header -->
 
                         <!-- /Inner main header -->
@@ -123,28 +155,29 @@
                         <!-- Inner main body -->
                         <% for(var i=0; i<all_post.length; i++) {%>
                             <div class="inner-main-body p-2 p-sm-3 collapse id-<%= all_post[i].post_id %> show">
-                                <div class="card mb-2 ">
+                                <div class="card mb-2 " >
                                     <div class="card-body p-2 p-sm-3">
                                         <div class="media forum-item">
                                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                                class="mr-3 rounded-circle" width="50" alt="User" />
+                                                class="rounded-circle" width="50" alt="User" />
                                             <div class="media-body">
-                                                <h6><a href="/profile/<%= all_post[i]["user_id"] %>"
-                                                        class="nav-link">
+                                                <h6>
+                                                    <a href="/profile/<%= all_post[i]["user_id"] %>" class="nav-link forum-profile-link">
                                                         <%= all_post[i]["user.name"] %>
                                                             <%= all_post[i]["user.surname"] %>
-                                                    </a></h6>
-                                                <p class="text-secondary">
-                                                <p>
-                                                    <%= all_post[i].p_text %>
+                                                    </a>
+                                                </h6>
+                                                
+                                                <p class="text-secondary ml-3 text-wrap text-area">                                                
+                                                        <%= all_post[i].p_text %>
                                                 </p>
-                                                </p>
+                                                
                                                 <div class="text-muted ">
                                                     <form action="/like_post" method="POST">
                                                         <button type="submit"
                                                             class="float-right btn btn-danger btn-sm ml-1"><i
                                                                 class="far fa-heart"></i>
-                                                            <%= all_post[i]["votes.like"]%>
+                                                            <%= all_like[i]["votes.like"]%>
                                                         </button>
                                                         <a href="#" data-toggle="collapse"
                                                             data-target=".id-<%= all_post[i].post_id %>"
@@ -161,7 +194,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-secondary font-weight-bold">
+                                        <div class="text-secondary" style="font-size: 13.8px;">
                                             <%= all_post[i].time%>
                                         </div>
                                     </div>
@@ -179,20 +212,17 @@
                                                 <div class="media forum-item">
                                                     <a href="javascript:void(0)" class="card-link"> <img
                                                             src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                                            class="rounded-circle" width="50" alt="User" /> <small
-                                                            class="d-block text-center text-muted">Newbie</small> </a>
-                                                    <div class="media-body ml-3"> <a href="javascript:void(0)"
-                                                            class="text-secondary">Mokrani</a> <small
-                                                            class="text-muted ml-2">1
-                                                            hour ago</small>
-                                                        <h5 class="mt-1">
-                                                            <a href="/profile/<%= all_comment[j]["user_id"] %>"
-                                                                class="nav-link">
-                                                                <%= all_comment[j]["user.name"] %>
-                                                                <%= all_comment[j]["user.surname"] %>
-                                                            </a>
-                                                        </h5>
-                                                        <div class="mt-3 font-size-sm">
+                                                            class="rounded-circle" width="50" alt="User" /> 
+                                                             
+                                                    </a>
+                                                    <div class="media-body"> 
+                                                        <a href="/profile/<%= all_comment[j]["user_id"] %>"
+                                                            class="nav-link forum-profile-link">
+                                                            <%= all_comment[j]["user.name"] %>
+                                                            <%= all_comment[j]["user.surname"] %>
+                                                        </a>
+
+                                                        <div class="ml-3">
                                                             <p>
                                                                 <%= all_comment[j].c_text %>
                                                             </p>
